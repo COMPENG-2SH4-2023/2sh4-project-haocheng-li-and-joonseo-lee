@@ -1,12 +1,10 @@
 #include "GameMechs.h"
 
-GameMechs::GameMechs()
-{
+GameMechs::GameMechs() {
 
 }
 
-GameMechs::GameMechs(int boardX, int boardY)
-{
+GameMechs::GameMechs(int boardX, int boardY) {
 
 }
 
@@ -14,39 +12,32 @@ GameMechs::GameMechs(int boardX, int boardY)
 
 
 
-bool GameMechs::getExitFlagStatus()
-{
+bool GameMechs::getExitFlagStatus() {
 
 }
 
-char GameMechs::getInput()
-{
+char GameMechs::getInput() {
 
 }
 
-int GameMechs::getBoardSizeX()
-{
+int GameMechs::getBoardSizeX() {
 
 }
 
-int GameMechs::getBoardSizeY()
-{
+int GameMechs::getBoardSizeY() {
 
 }
 
 
-void GameMechs::setExitTrue()
-{
+void GameMechs::setExitTrue() {
 
 }
 
-void GameMechs::setInput(char this_input)
-{
+void GameMechs::setInput(char this_input) {
 
 }
 
-void GameMechs::clearInput()
-{
+void GameMechs::clearInput() {
 
 }
 
