@@ -14,7 +14,7 @@ objPosArrayList::objPosArrayList() {
 }
 
 objPosArrayList::~objPosArrayList() {
-    delete this->aList;
+    delete [] this->aList;
 }
 
 int objPosArrayList::getSize() {
