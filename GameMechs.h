@@ -6,6 +6,7 @@
 
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "MacUILib.h"
 
 using namespace std;
 
@@ -21,25 +22,29 @@ class GameMechs
     private:
         char input;
         bool exitFlag;
-        
+        bool loseFlag;
         int boardSizeX;
         int boardSizeY;
+        int score;
 
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
         
         bool getExitFlagStatus();
+        bool getLoseFlagStatus();
         void setExitTrue();
+        void setLoseFlag();
 
         char getInput();
         void setInput(char this_input);
         void clearInput();
+        void incrementScore();
 
         int getBoardSizeX();
         int getBoardSizeY();
-      
-
+        int getScore();
+    
 };
 
 #endif
