@@ -6,7 +6,7 @@ using namespace std;
 
 #define DELAY_CONST 100000
 
-bool exitFlag;
+GameMechs* mechs;
 
 void Initialize(void);
 void GetInput(void);
@@ -18,7 +18,7 @@ void CleanUp(void);
 int main(void) {
     Initialize();
 
-    while(exitFlag == false) {
+    while(mechs.getExitFlagStatus() == false) {
         GetInput();
         RunLogic();
         DrawScreen();
@@ -33,10 +33,14 @@ void Initialize(void) {
     MacUILib_clearScreen();
 
     exitFlag = false;
+
+    mechs = new GameMechs;
+
+    mechs = &GameMechs();
 }
 
 void GetInput(void) {
-   
+   (MacUILib_hasChar()) ? mechs.setInput(MacUILib_getChar()) : 0;
 }
 
 void RunLogic(void) {
@@ -54,6 +58,7 @@ void LoopDelay(void) {
 
 void CleanUp(void) {
     MacUILib_clearScreen();    
-  
+    delete mechs;
+
     MacUILib_uninit();
 }
