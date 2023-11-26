@@ -29,7 +29,7 @@ bool GameMechs::getLoseFlagStatus() {
 }
 
 char GameMechs::getInput() {
-    return (MacUILib_hasChar()) ? MacUILib_getChar() : 0;
+    return this->input;
 }
 
 int GameMechs::getBoardSizeX() {

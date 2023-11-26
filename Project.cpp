@@ -1,5 +1,6 @@
 #include <iostream>
 #include "MacUILib.h"
+#include "GameMechs.h"
 #include "objPos.h"
 #include "GameMechs.h"
 #include "Player.h"
@@ -74,6 +75,7 @@ void LoopDelay(void) {
 
 void CleanUp(void) {
     MacUILib_clearScreen();    
-  
+    delete mechs;
+
     MacUILib_uninit();
 }
