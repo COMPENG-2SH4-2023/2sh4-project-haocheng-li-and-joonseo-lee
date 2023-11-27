@@ -7,6 +7,7 @@ GameMechs::GameMechs() {
     this->boardSizeX = 30;
     this->boardSizeY = 15;
     this->score = 0;
+    this->foodPos = objPos(0, 0, 'F');
 }
 
 GameMechs::GameMechs(int boardX, int boardY) {
@@ -16,6 +17,7 @@ GameMechs::GameMechs(int boardX, int boardY) {
     this->boardSizeX = boardX;
     this->boardSizeY = boardY;
     this->score = 0;
+    this->foodPos = objPos(0, 0, 'F');
 }
 
 // do you need a destructor?
@@ -62,4 +64,26 @@ void GameMechs::clearInput() {
 
 void GameMechs::incrementScore() {
     this->score++;
+}
+
+void GameMechs::generateFood(objPos blockOff) {
+    int row, col;
+    bool isBlocked = true;
+    while (isBlocked) {
+        randomize(row, 1, boardSizeY - 1);
+        randomize(col, 1, boardSizeX - 1);
+        isBlocked = row == blockOff.y && col == blockOff.x;
+    }
+    foodPos.y = row;
+    foodPos.x = col;
+}
+
+void GameMechs::getFoodPos(objPos &returnPos) {
+    returnPos.x = foodPos.x;
+    returnPos.y = foodPos.y;
+    returnPos.symbol = foodPos.symbol;
+}
+
+void GameMechs::randomize(int &num, int lower, int upper) {
+    num = (rand() % (upper - lower)) + lower;
 }
