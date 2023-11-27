@@ -75,7 +75,8 @@ void LoopDelay(void) {
 
 void CleanUp(void) {
     MacUILib_clearScreen();    
-    delete mechs;
+    delete gameMechs;
+    delete player;
 
     MacUILib_uninit();
 }
