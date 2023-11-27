@@ -5,7 +5,7 @@ Player::Player(GameMechs* thisGMRef) {
     myDir = STOP;
 
     // more actions to be included
-    playerPos = objPos(15, 7, '*');
+    playerPos = new objPos(15, 7, '*');
 }
 
 Player::~Player() {
@@ -13,9 +13,9 @@ Player::~Player() {
     delete mainGameMechsRef;
 }
 
-void Player::getPlayerPos(objPos &returnPos) {
+*objPosArrayList Player::getPlayerPos() {
     // return the reference to the playerPos arrray list
-    returnPos = playerPos;
+    return playerPosList;
 }
 
 void Player::updatePlayerDir() {
@@ -42,24 +42,27 @@ void Player::updatePlayerDir() {
 
 void Player::movePlayer() {
     // PPA3 Finite State Machine logic
+    objPos updatedPos = objPos(player.x, player.y, '*');
     switch (myDir) {
         case UP:
-            playerPos.y--;
-            if (playerPos.y < 1) playerPos.y = mainGameMechsRef->getBoardSizeY() - 2;
+            updatedPos.y--;
+            if (updatedPos.y < 1) updatedPos.y = mainGameMechsRef->getBoardSizeY() - 2;
             break;
         case LEFT:
-            playerPos.x--;
-            if (playerPos.x < 1) playerPos.x = mainGameMechsRef->getBoardSizeX() - 2;
+            updatedPos.x--;
+            if (updatedPos.x < 1) updatedPos.x = mainGameMechsRef->getBoardSizeX() - 2;
             break;
         case DOWN:
-            playerPos.y++;
-            if (playerPos.y > mainGameMechsRef->getBoardSizeY() - 2) playerPos.y = 1;
+            updatedPos.y++;
+            if (updatedPos.y > mainGameMechsRef->getBoardSizeY() - 2) updatedPos.y = 1;
             break;
         case RIGHT:
-            playerPos.x++;
-            if (playerPos.x > mainGameMechsRef->getBoardSizeX() - 2) playerPos.x = 1;
+            updatedPos.x++;
+            if (updatedPos.x > mainGameMechsRef->getBoardSizeX() - 2) updatedPos.x = 1;
             break;
         default:
             break;
     }
+    playerPosList->insertHead(updatedPos);
+    playerPosList->removeHead();
 }
