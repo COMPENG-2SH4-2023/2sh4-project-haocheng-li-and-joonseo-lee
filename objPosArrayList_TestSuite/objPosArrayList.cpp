@@ -44,7 +44,6 @@ void objPosArrayList::removeHead() {
         this->aList[i] = this->aList[i + 1];
     }
     this->removeTail();
-    this->sizeList--;
 }
 
 // removes tail
