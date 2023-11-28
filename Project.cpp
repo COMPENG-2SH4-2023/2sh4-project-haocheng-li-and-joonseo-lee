@@ -39,8 +39,7 @@ void Initialize(void) {
     srand(time(NULL));
     gameMechs = new GameMechs();
     player = new Player(gameMechs);
-    objPos playerPos;
-    player->getPlayerPos(playerPos);
+    objPosArrayList* playerPos = player->getPlayerPos();
     gameMechs->generateFood(playerPos);
 }
 
@@ -53,9 +52,9 @@ void RunLogic(void) {
     player->movePlayer();
 
     //  ====================FOR DEBUG ONLY====================
-    objPos playerPos;
-    player->getPlayerPos(playerPos);
-    if (gameMechs->getInput() == 'f') gameMechs->generateFood(playerPos);
+    // objPos playerPos;
+    // player->getPlayerPos(playerPos);
+    // if (gameMechs->getInput() == 'f') gameMechs->generateFood(playerPos);
     //  ====================FOR DEBUG ONLY====================
 
     gameMechs->setInput(0);
@@ -63,27 +62,37 @@ void RunLogic(void) {
 
 void DrawScreen(void) {
     MacUILib_clearScreen();
-    objPos playerPos;
+    objPosArrayList* playerPos;
+    objPos playerCheck;
     objPos foodPos;
-    player->getPlayerPos(playerPos);
+    playerPos = player->getPlayerPos();
     gameMechs->getFoodPos(foodPos);
+    bool check;
     for (int i = 0; i < gameMechs->getBoardSizeY(); i++) {
         for (int j = 0; j < gameMechs->getBoardSizeX(); j++) {
+            check = false;
             if (i == 0 || i == gameMechs->getBoardSizeY() - 1 
             || j == 0 || j == gameMechs->getBoardSizeX() - 1) {
                 MacUILib_printf("#");
             }
-            else if (i == playerPos.y && j == playerPos.x) {
-                MacUILib_printf("%c", playerPos.symbol);
-            }
-            else if (i == foodPos.y && j == foodPos.x) {
-                MacUILib_printf("%c", foodPos.symbol);
-            }
             else {
-                MacUILib_printf(" ");
+                if (i == foodPos.y && j == foodPos.x) {
+                    MacUILib_printf("%c", foodPos.symbol);
+                    check = true;
+                }
+                for (int k = 0; !check && k < playerPos->getSize(); k++) {
+                    playerPos->getElement(playerCheck, k);
+                    if (i == playerCheck.y && j == playerCheck.x) {
+                        MacUILib_printf("%c", playerCheck.symbol);
+                        check = true;
+                    }
+                }
+                if (!check) {
+                    MacUILib_printf(" ");
+                }
             }
-        }
         MacUILib_printf("\n");
+        }
     }
 }
 

@@ -46,7 +46,7 @@ class GameMechs
         int getBoardSizeY();
         int getScore();
 
-        void generateFood(objPos blockOff);
+        void generateFood(objPosArrayList* blockOff);
         void getFoodPos(objPos &returnPos);
         void randomize(int &num, int lower, int upper);
 };

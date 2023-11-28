@@ -5,15 +5,20 @@ Player::Player(GameMechs* thisGMRef) {
     myDir = STOP;
 
     // more actions to be included
-    playerPos = new objPos(15, 7, '*');
+    objPos init;
+    init = objPos(15, 7, '*');
+
+    playerPosList = new objPosArrayList();
+    playerPosList->insertHead(init);
 }
 
 Player::~Player() {
     // delete any heap members here
     delete mainGameMechsRef;
+    delete playerPosList;
 }
 
-*objPosArrayList Player::getPlayerPos() {
+objPosArrayList* Player::getPlayerPos() {
     // return the reference to the playerPos arrray list
     return playerPosList;
 }
@@ -42,7 +47,8 @@ void Player::updatePlayerDir() {
 
 void Player::movePlayer() {
     // PPA3 Finite State Machine logic
-    objPos updatedPos = objPos(player.x, player.y, '*');
+    objPos updatedPos;
+    this->playerPosList->getHeadElement(updatedPos);
     switch (myDir) {
         case UP:
             updatedPos.y--;
@@ -64,5 +70,5 @@ void Player::movePlayer() {
             break;
     }
     playerPosList->insertHead(updatedPos);
-    playerPosList->removeHead();
+    playerPosList->removeTail();
 }

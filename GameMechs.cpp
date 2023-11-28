@@ -66,13 +66,17 @@ void GameMechs::incrementScore() {
     this->score++;
 }
 
-void GameMechs::generateFood(objPos blockOff) {
+void GameMechs::generateFood(objPosArrayList* blockOff) {
     int row, col;
     bool isBlocked = true;
+    objPos counter;
     while (isBlocked) {
         randomize(row, 1, boardSizeY - 1);
         randomize(col, 1, boardSizeX - 1);
-        isBlocked = row == blockOff.y && col == blockOff.x;
+        for (int i = 0; i < blockOff->getSize(); i++) {
+            blockOff->getElement(counter, i);
+            isBlocked = row == counter.y && col == counter.x;
+        }
     }
     foodPos.y = row;
     foodPos.x = col;
