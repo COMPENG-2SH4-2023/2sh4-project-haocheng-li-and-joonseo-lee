@@ -39,6 +39,9 @@ void Player::updatePlayerDir() {
             case 'd':
                 if (myDir != LEFT) myDir = RIGHT;
                 break;
+            case 27:
+                this->mainGameMechsRef->setExitTrue();
+                break;
             default:
                 break;
         }
