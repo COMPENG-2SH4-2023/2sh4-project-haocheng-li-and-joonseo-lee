@@ -53,6 +53,7 @@ void Player::movePlayer() {
     objPos updatedPos;
     objPos foodPos;
     objPos prevPos;
+    objPos check;
     this->playerPosList->getHeadElement(updatedPos);
     this->mainGameMechsRef->getFoodPos(foodPos);
     prevPos = updatedPos;
@@ -76,8 +77,17 @@ void Player::movePlayer() {
         default:
             break;
     }
+    for (int i = 1; i < this->playerPosList->getSize(); i++) {
+        playerPosList->getElement(check, i);
+        if (check.x == updatedPos.x && check.y == updatedPos.y) {
+            mainGameMechsRef->setLoseFlag();
+            mainGameMechsRef->setExitTrue();
+        }
+    }
     if (updatedPos.x == foodPos.x && updatedPos.y == foodPos.y) {
         playerPosList->insertTail(prevPos);
+        mainGameMechsRef->generateFood(this->playerPosList);
+        mainGameMechsRef->incrementScore();
     }
     playerPosList->insertHead(updatedPos);
     playerPosList->removeTail();
