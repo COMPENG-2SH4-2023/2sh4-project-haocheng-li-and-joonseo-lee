@@ -51,7 +51,11 @@ void Player::updatePlayerDir() {
 void Player::movePlayer() {
     // PPA3 Finite State Machine logic
     objPos updatedPos;
+    objPos foodPos;
+    objPos prevPos;
     this->playerPosList->getHeadElement(updatedPos);
+    this->mainGameMechsRef->getFoodPos(foodPos);
+    prevPos = updatedPos;
     switch (myDir) {
         case UP:
             updatedPos.y--;
@@ -71,6 +75,9 @@ void Player::movePlayer() {
             break;
         default:
             break;
+    }
+    if (updatedPos.x == foodPos.x && updatedPos.y == foodPos.y) {
+        playerPosList->insertTail(prevPos);
     }
     playerPosList->insertHead(updatedPos);
     playerPosList->removeTail();
