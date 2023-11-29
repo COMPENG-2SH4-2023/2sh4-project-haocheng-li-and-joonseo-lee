@@ -57,11 +57,9 @@ void Player::movePlayer() {
     // PPA3 Finite State Machine logic
     objPos updatedPos;
     objPos foodPos;
-    objPos prevPos;
     objPos check;
     this->playerPosList->getHeadElement(updatedPos);
     this->mainGameMechsRef->getFoodPos(foodPos);
-    prevPos = updatedPos;
     switch (myDir) {
         case UP:
             updatedPos.y--;
@@ -82,13 +80,6 @@ void Player::movePlayer() {
         default:
             break;
     }
-    for (int i = 1; i < this->playerPosList->getSize(); i++) {
-        playerPosList->getElement(check, i);
-        if (check.x == updatedPos.x && check.y == updatedPos.y) {
-            mainGameMechsRef->setLoseFlag();
-            mainGameMechsRef->setExitTrue();
-        }
-    }
     playerPosList->insertHead(updatedPos);
     if (updatedPos.x == foodPos.x && updatedPos.y == foodPos.y) {
         mainGameMechsRef->generateFood(this->playerPosList);
@@ -96,5 +87,12 @@ void Player::movePlayer() {
     }
     else {
         playerPosList->removeTail();
+    }
+    for (int i = 1; i < this->playerPosList->getSize(); i++) {
+        playerPosList->getElement(check, i);
+        if (check.x == updatedPos.x && check.y == updatedPos.y) {
+            mainGameMechsRef->setLoseFlag();
+            mainGameMechsRef->setExitTrue();
+        }
     }
 }
