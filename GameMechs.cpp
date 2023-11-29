@@ -76,6 +76,9 @@ void GameMechs::generateFood(objPosArrayList* blockOff) {
         for (int i = 0; i < blockOff->getSize(); i++) {
             blockOff->getElement(counter, i);
             isBlocked = row == counter.y && col == counter.x;
+            if (isBlocked) {
+                break;
+            }
         }
     }
     foodPos.y = row;

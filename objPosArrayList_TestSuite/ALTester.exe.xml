@@ -6,11 +6,7 @@
 		<testcase classname="AllTests" name="testInsertTail_1Element"/>
 		<testcase classname="AllTests" name="testInsertTail_5Element"/>
 		<testcase classname="AllTests" name="testRemoveHead_1Element"/>
-		<testcase classname="AllTests" name="testRemoveHead_5Element">
-			<failure message="Test.cpp:268 testRemoveHead_5Element: expectedSize == actualSize expected:	4	but was:	3	">
-testRemoveHead_5Element: expectedSize == actualSize expected:	4	but was:	3	
-			</failure>
-		</testcase>
+		<testcase classname="AllTests" name="testRemoveHead_5Element"/>
 		<testcase classname="AllTests" name="testRemoveTail_1Element"/>
 		<testcase classname="AllTests" name="testRemoveTail_5Element"/>
 	</testsuite>
