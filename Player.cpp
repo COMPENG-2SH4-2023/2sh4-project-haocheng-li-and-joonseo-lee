@@ -1,10 +1,11 @@
 #include "Player.h"
 
+// constructor
 Player::Player(GameMechs* thisGMRef) {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
-    // more actions to be included
+    // default starting pos is the middle of the board
     objPos init;
     init = objPos(15, 7, '*');
 
@@ -18,11 +19,13 @@ Player::~Player() {
     delete playerPosList;
 }
 
+// player pos getter
 objPosArrayList* Player::getPlayerPos() {
     // return the reference to the playerPos arrray list
     return playerPosList;
 }
 
+// updates player posistion enum
 void Player::updatePlayerDir() {
     // PPA3 input processing logic
     if (mainGameMechsRef->getInput() != 0) {
@@ -41,6 +44,7 @@ void Player::updatePlayerDir() {
                 break;
             case 27:
                 this->mainGameMechsRef->setExitTrue();
+                myDir = STOP; // prevents wrong exit message from displaying
                 break;
             default:
                 break;
@@ -48,6 +52,7 @@ void Player::updatePlayerDir() {
     }
 }
 
+// moves player in desired direction
 void Player::movePlayer() {
     // PPA3 Finite State Machine logic
     objPos updatedPos;
