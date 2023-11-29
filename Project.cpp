@@ -57,7 +57,7 @@ void RunLogic(void) {
     // if (gameMechs->getInput() == 'f') gameMechs->generateFood(playerPos);
     //  ====================FOR DEBUG ONLY====================
 
-    gameMechs->setInput(0);
+    gameMechs->clearInput();
 }
 
 void DrawScreen(void) {
