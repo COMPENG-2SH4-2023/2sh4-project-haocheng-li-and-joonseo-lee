@@ -89,11 +89,12 @@ void Player::movePlayer() {
             mainGameMechsRef->setExitTrue();
         }
     }
+    playerPosList->insertHead(updatedPos);
     if (updatedPos.x == foodPos.x && updatedPos.y == foodPos.y) {
-        playerPosList->insertTail(prevPos);
         mainGameMechsRef->generateFood(this->playerPosList);
         mainGameMechsRef->incrementScore();
     }
-    playerPosList->insertHead(updatedPos);
-    playerPosList->removeTail();
+    else {
+        playerPosList->removeTail();
+    }
 }
