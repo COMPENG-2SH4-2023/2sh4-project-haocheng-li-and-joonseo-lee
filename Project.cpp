@@ -51,12 +51,6 @@ void RunLogic(void) {
     player->updatePlayerDir();
     player->movePlayer();
 
-    //  ====================FOR DEBUG ONLY====================
-    // objPos playerPos;
-    // player->getPlayerPos(playerPos);
-    // if (gameMechs->getInput() == 'f') gameMechs->generateFood(playerPos);
-    //  ====================FOR DEBUG ONLY====================
-
     gameMechs->clearInput();
 }
 
