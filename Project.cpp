@@ -36,14 +36,18 @@ void Initialize(void) {
     MacUILib_init();
     MacUILib_clearScreen();
 
+    // init pseudo-random num gen
     srand(time(NULL));
+    // init pointers on heap
     gameMechs = new GameMechs();
     player = new Player(gameMechs);
+    // generate first location of food
     objPosArrayList* playerPos = player->getPlayerPos();
     gameMechs->generateFood(playerPos);
 }
 
 void GetInput(void) {
+    // sets keyboard input to the input in the GameMechs class for further processing
     if (MacUILib_hasChar()) gameMechs->setInput(MacUILib_getChar());
 }
 
@@ -65,15 +69,18 @@ void DrawScreen(void) {
     for (int i = 0; i < gameMechs->getBoardSizeY(); i++) {
         for (int j = 0; j < gameMechs->getBoardSizeX(); j++) {
             check = false;
+            // prints border
             if (i == 0 || i == gameMechs->getBoardSizeY() - 1 
             || j == 0 || j == gameMechs->getBoardSizeX() - 1) {
                 MacUILib_printf("#");
             }
             else {
+                // prints food
                 if (i == foodPos.y && j == foodPos.x) {
                     MacUILib_printf("%c", foodPos.symbol);
                     check = true;
                 }
+                // prints snake body
                 for (int k = 0; !check && k < playerPos->getSize(); k++) {
                     playerPos->getElement(playerCheck, k);
                     if (i == playerCheck.y && j == playerCheck.x) {
@@ -81,6 +88,7 @@ void DrawScreen(void) {
                         check = true;
                     }
                 }
+                // prints empty space
                 if (!check) {
                     MacUILib_printf(" ");
                 }
@@ -96,12 +104,15 @@ void LoopDelay(void) {
 
 void CleanUp(void) {
     MacUILib_clearScreen();
+    // print lose message
     if (gameMechs->getLoseFlagStatus()) {
         MacUILib_printf("You Lose! \nScore: %d", gameMechs->getScore());
     }
+    // print exit by key message
     else {
         MacUILib_printf("Game Terminated. \nScore: %d", gameMechs->getScore());
     }
+    // delete heap members
     delete gameMechs;
     delete player;
 
