@@ -8,7 +8,7 @@ GameMechs::GameMechs() {
     this->boardSizeX = 30;
     this->boardSizeY = 15;
     this->score = 0;
-    this->foodPos = objPos(0, 0, 'F');
+    this->foodBucket = new objPosArrayList();
 }
 
 // additional constructor with board size designation
@@ -19,10 +19,13 @@ GameMechs::GameMechs(int boardX, int boardY) {
     this->boardSizeX = boardX;
     this->boardSizeY = boardY;
     this->score = 0;
-    this->foodPos = objPos(0, 0, 'F');
+    this->foodBucket = new objPosArrayList();
 }
 
 // do you need a destructor?
+GameMechs::~GameMechs() {
+    delete foodBucket;
+}
 
 // exit flag getter
 bool GameMechs::getExitFlagStatus() {
@@ -79,32 +82,48 @@ void GameMechs::incrementScore() {
     this->score++;
 }
 
-// generates food at random position
-void GameMechs::generateFood(objPosArrayList* blockOff) {
-    int row, col;
-    bool isBlocked = true;
-    objPos counter;
-    while (isBlocked) {
-        randomize(row, 1, boardSizeY - 1);
-        randomize(col, 1, boardSizeX - 1);
-        // if any part of the snake's body overlaps with new food position, regenerate
-        for (int i = 0; i < blockOff->getSize(); i++) {
-            blockOff->getElement(counter, i);
-            isBlocked = row == counter.y && col == counter.x;
-            if (isBlocked) {
-                break;
-            }
-        }
-    }
-    foodPos.y = row;
-    foodPos.x = col;
+// increase the score by a specified amount
+void GameMechs::increaseScore(int score) {
+    this->score += score;
 }
 
-// food pos getter
-void GameMechs::getFoodPos(objPos &returnPos) {
-    returnPos.x = foodPos.x;
-    returnPos.y = foodPos.y;
-    returnPos.symbol = foodPos.symbol;
+// generates a single food at random position
+void GameMechs::generateFood(objPosArrayList* playerPosList, objPosArrayList* foodPosList, bool isSpecial,  objPos &foodPos) {
+    bool isBlocked = true;
+    while (isBlocked) {
+        // generate random numbers for the x-y coordinates
+        randomize(foodPos.y, 1, boardSizeY - 1);
+        randomize(foodPos.x, 1, boardSizeX - 1);
+
+        if (isSpecial) foodPos.symbol = 'P';
+        else foodPos.symbol = 'F';
+
+        // if any part of the snake's body or any already generated food item overlaps with new food position, regenerate
+        isBlocked = playerPosList->contains(foodPos) || foodPosList->contains(foodPos);
+    }
+}
+
+// generates 5 food items
+void GameMechs::generateFoodList(objPosArrayList* playerPosList) {
+    clearFood();
+    objPos tempFoodPos;
+    for (int i = 0; i < 5; i++) {
+        generateFood(playerPosList, foodBucket, i < 1, tempFoodPos);
+        foodBucket->insertTail(tempFoodPos);
+    }
+}
+
+// foodBucket getter
+objPosArrayList* GameMechs::getFoodBucket() {
+    return foodBucket;
+}
+
+// helper function to clear foodBucket
+void GameMechs::clearFood() {
+    int size = foodBucket->getSize();
+    for (int i = 0; i < size; i++) {
+        foodBucket->removeTail();
+    }
 }
 
 // helper function to randomize numbers

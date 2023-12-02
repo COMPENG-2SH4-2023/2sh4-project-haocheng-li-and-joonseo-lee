@@ -25,6 +25,10 @@ class objPosArrayList
         void getHeadElement(objPos &returnPos);
         void getTailElement(objPos &returnPos);
         void getElement(objPos &returnPos, int index);
+
+        bool contains(objPos pos);
+        bool contains(int x, int y);
+        char getSymbol(int x, int y);
 };
 
 #endif

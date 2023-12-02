@@ -73,3 +73,23 @@ void objPosArrayList::getElement(objPos &returnPos, int index) {
     returnPos.y = this->aList[index].y;
     returnPos.symbol = this->aList[index].symbol;
 }
+
+// returns true if the input position overlaps with any position in the array list, false otherwise
+bool objPosArrayList::contains(objPos pos) {
+    return contains(pos.x, pos.y);
+}
+
+bool objPosArrayList::contains(int x, int y) {
+    for (int i = 0; i < sizeList; i++) {
+        if (x == aList[i].x && y == aList[i].y) return true;
+    }
+    return false;
+}
+
+// returns the symbol of the first occurence of an objPos with matching coordinates
+char objPosArrayList::getSymbol(int x, int y) {
+    for (int i = 0; i < sizeList; i++) {
+        if (x == aList[i].x && y == aList[i].y) return aList[i].symbol;
+    }
+    return 0;
+}

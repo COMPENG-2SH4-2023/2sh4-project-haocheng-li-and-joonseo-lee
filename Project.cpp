@@ -43,7 +43,7 @@ void Initialize(void) {
     player = new Player(gameMechs);
     // generate first location of food
     objPosArrayList* playerPos = player->getPlayerPos();
-    gameMechs->generateFood(playerPos);
+    gameMechs->generateFoodList(playerPos);
 }
 
 void GetInput(void) {
@@ -60,11 +60,9 @@ void RunLogic(void) {
 
 void DrawScreen(void) {
     MacUILib_clearScreen();
-    objPosArrayList* playerPos;
+    objPosArrayList* playerPos = player->getPlayerPos();
+    objPosArrayList* foodBucket = gameMechs->getFoodBucket();
     objPos playerCheck;
-    objPos foodPos;
-    playerPos = player->getPlayerPos();
-    gameMechs->getFoodPos(foodPos);
     bool check;
     for (int i = 0; i < gameMechs->getBoardSizeY(); i++) {
         for (int j = 0; j < gameMechs->getBoardSizeX(); j++) {
@@ -76,8 +74,8 @@ void DrawScreen(void) {
             }
             else {
                 // prints food
-                if (i == foodPos.y && j == foodPos.x) {
-                    MacUILib_printf("%c", foodPos.symbol);
+                if (foodBucket->contains(j, i)) {
+                    MacUILib_printf("%c", foodBucket->getSymbol(j, i));
                     check = true;
                 }
                 // prints snake body
@@ -96,6 +94,7 @@ void DrawScreen(void) {
         }
         MacUILib_printf("\n");
     }
+    MacUILib_printf("Score: %d", gameMechs->getScore());
 }
 
 void LoopDelay(void) {
