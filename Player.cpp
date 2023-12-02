@@ -82,9 +82,15 @@ void Player::movePlayer() {
     // prevents displaying the wrong exit message
     if (myDir != STOP) {
         playerPosList->insertHead(updatedPos);
-        if (updatedPos.x == foodPos.x && updatedPos.y == foodPos.y) {
-            mainGameMechsRef->generateFood(this->playerPosList);
-            mainGameMechsRef->incrementScore();
+        if (foodBucket->contains(updatedPos)) {
+            if (foodBucket->getSymbol(updatedPos.x, updatedPos.y) == 'P') {
+                mainGameMechsRef->generateFoodList(this->playerPosList);
+                mainGameMechsRef->increaseScore(10);
+            }
+            else {
+                mainGameMechsRef->generateFoodList(this->playerPosList);
+                mainGameMechsRef->incrementScore();
+            }
         }
         else {
             playerPosList->removeTail();
