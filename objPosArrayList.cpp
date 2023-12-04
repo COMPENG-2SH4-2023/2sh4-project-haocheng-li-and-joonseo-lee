@@ -49,8 +49,11 @@ void objPosArrayList::removeHead() {
 
 // removes tail
 void objPosArrayList::removeTail() {
-    this->aList[this->sizeList - 1] = objPos();
-    this->sizeList--;
+    // check prevents sizeList becoming < 0 & prevents out of bounds errors
+    if (this->sizeList > 0) {
+        this->aList[this->sizeList - 1] = objPos();
+        this->sizeList--;
+    }
 }
 
 // returns element in head of array list
@@ -62,16 +65,31 @@ void objPosArrayList::getHeadElement(objPos &returnPos) {
 
 // returns element in tail of array list
 void objPosArrayList::getTailElement(objPos &returnPos) {
-    returnPos.x = this->aList[this->sizeList - 1].x;
-    returnPos.y = this->aList[this->sizeList - 1].y;
-    returnPos.symbol = this->aList[this->sizeList - 1].symbol;
+    // prevent out of bounds issues, return null element (all zeros) if nothing in array
+    if (this->sizeList > 0) {
+        returnPos.x = this->aList[this->sizeList - 1].x;
+        returnPos.y = this->aList[this->sizeList - 1].y;
+        returnPos.symbol = this->aList[this->sizeList - 1].symbol;
+    }
+    else {
+        returnPos.x = 0;
+        returnPos.y = 0;
+        returnPos.symbol = 0;
+    }
 }
 
 // returns element in given position of array
 void objPosArrayList::getElement(objPos &returnPos, int index) {
-    returnPos.x = this->aList[index].x;
-    returnPos.y = this->aList[index].y;
-    returnPos.symbol = this->aList[index].symbol;
+    if (index < 0 || index >= this->sizeList) {
+        returnPos.x = 0;
+        returnPos.y = 0;
+        returnPos.symbol = 0;
+    }
+    else {
+        returnPos.x = this->aList[index].x;
+        returnPos.y = this->aList[index].y;
+        returnPos.symbol = this->aList[index].symbol;
+    }   
 }
 
 // returns true if the input position overlaps with any position in the array list, false otherwise
